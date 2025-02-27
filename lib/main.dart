@@ -4,16 +4,47 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // Default theme mode is system
+  ThemeMode _themeMode = ThemeMode.system;
+
+  void _setDarkTheme() {
+    setState(() {
+      _themeMode = ThemeMode.dark;   // Switch to Dark Theme
+    });
+  }
+
+  void _setLightTheme() {
+    setState(() {
+      _themeMode = ThemeMode.light;  // Switch to Light Theme
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FadingTextAnimation(),
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      darkTheme: ThemeData.dark(),
+      themeMode: _themeMode, // Use themeMode to switch themes
+      home: FadingTextAnimation(
+        setDarkTheme: _setDarkTheme,
+        setLightTheme: _setLightTheme,
+      ),
     );
   }
 }
 
 class FadingTextAnimation extends StatefulWidget {
+  final VoidCallback setLightTheme;
+  final VoidCallback setDarkTheme;
+
+  FadingTextAnimation({required this.setLightTheme, required this.setDarkTheme});
+
   @override
   _FadingTextAnimationState createState() => _FadingTextAnimationState();
 }
@@ -32,6 +63,16 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Fading Text Animation'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.wb_sunny),
+            onPressed: widget.setLightTheme, // Button for Light Mode
+          ),
+          IconButton(
+            icon: Icon(Icons.nights_stay),
+            onPressed: widget.setDarkTheme,  // Button for Dark Mode
+          ),
+        ],
       ),
       body: Center(
         child: AnimatedOpacity(
