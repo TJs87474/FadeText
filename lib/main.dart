@@ -63,7 +63,9 @@ class _PageViewScreenState extends State<PageViewScreen> {
             setDarkTheme: widget.setDarkTheme,
             setLightTheme: widget.setLightTheme,
           ), // First screen
-          newscreen(), // Second screen (ensure 'newscreen.dart' has a properly defined NewScreen widget)
+          newscreen(   
+            setDarkTheme: widget.setDarkTheme,
+            setLightTheme: widget.setLightTheme,), // Second screen (ensure 'newscreen.dart' has a properly defined NewScreen widget)
         ],
       ),
     );

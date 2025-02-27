@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 
-class newscreen extends StatelessWidget {
+class newscreen extends StatefulWidget {
+  final VoidCallback setLightTheme;
+  final VoidCallback setDarkTheme;
+
+  newscreen({required this.setLightTheme, required this.setDarkTheme});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: FadingTextAnimation(),
-    );
-  }
+  _newscreenState createState() => _newscreenState();
 }
 
-class FadingTextAnimation extends StatefulWidget {
-  @override
-  _FadingTextAnimationState createState() => _FadingTextAnimationState();
-}
-
-class _FadingTextAnimationState extends State<FadingTextAnimation> {
+class _newscreenState extends State<newscreen> {
   bool _isVisible = true;
 
   void toggleVisibility() {
@@ -28,11 +24,21 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Fading Text Animation'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.wb_sunny),
+            onPressed: widget.setLightTheme, // Switch to Light Mode
+          ),
+          IconButton(
+            icon: Icon(Icons.nights_stay),
+            onPressed: widget.setDarkTheme, // Switch to Dark Mode
+          ),
+        ],
       ),
       body: Center(
         child: AnimatedOpacity(
           opacity: _isVisible ? 1.0 : 0.0,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           child: Text(
             'Hello, Flutter!',
             style: TextStyle(fontSize: 24),
@@ -46,6 +52,3 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
     );
   }
 }
-
-
-
