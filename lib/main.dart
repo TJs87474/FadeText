@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'newscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,13 +16,13 @@ class _MyAppState extends State<MyApp> {
 
   void _setDarkTheme() {
     setState(() {
-      _themeMode = ThemeMode.dark;   // Switch to Dark Theme
+      _themeMode = ThemeMode.dark; // Switch to Dark Theme
     });
   }
 
   void _setLightTheme() {
     setState(() {
-      _themeMode = ThemeMode.light;  // Switch to Light Theme
+      _themeMode = ThemeMode.light; // Switch to Light Theme
     });
   }
 
@@ -31,9 +32,39 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.blueGrey),
       darkTheme: ThemeData.dark(),
       themeMode: _themeMode, // Use themeMode to switch themes
-      home: FadingTextAnimation(
+      home: PageViewScreen(
         setDarkTheme: _setDarkTheme,
         setLightTheme: _setLightTheme,
+      ),
+    );
+  }
+}
+
+class PageViewScreen extends StatefulWidget {
+  final VoidCallback setLightTheme;
+  final VoidCallback setDarkTheme;
+
+  PageViewScreen({required this.setLightTheme, required this.setDarkTheme});
+
+  @override
+  _PageViewScreenState createState() => _PageViewScreenState();
+}
+
+class _PageViewScreenState extends State<PageViewScreen> {
+  final PageController _controller = PageController(initialPage: 0);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        controller: _controller,
+        children: [
+          FadingTextAnimation(
+            setDarkTheme: widget.setDarkTheme,
+            setLightTheme: widget.setLightTheme,
+          ), // First screen
+          newscreen(), // Second screen (ensure 'newscreen.dart' has a properly defined NewScreen widget)
+        ],
       ),
     );
   }
@@ -70,7 +101,7 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
           ),
           IconButton(
             icon: Icon(Icons.nights_stay),
-            onPressed: widget.setDarkTheme,  // Button for Dark Mode
+            onPressed: widget.setDarkTheme, // Button for Dark Mode
           ),
         ],
       ),
