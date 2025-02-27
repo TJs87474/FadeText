@@ -1,37 +1,10 @@
 import 'package:flutter/material.dart';
-import 'newscreen.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class newscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PageViewScreen(),
-    );
-  }
-}
-
-class PageViewScreen extends StatefulWidget {
-  @override
-  _PageViewScreenState createState() => _PageViewScreenState();
-}
-
-class _PageViewScreenState extends State<PageViewScreen> {
-  final PageController _controller = PageController(initialPage: 0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _controller,
-        children: [
-          FadingTextAnimation(),  // First screen
-          newscreen(),            // Second screen (ensure you have 'newscreen.dart')
-        ],
-      ),
+      home: FadingTextAnimation(),
     );
   }
 }
@@ -59,7 +32,7 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
       body: Center(
         child: AnimatedOpacity(
           opacity: _isVisible ? 1.0 : 0.0,
-          duration: Duration(seconds: 1),
+          duration: Duration(seconds: 5),
           child: Text(
             'Hello, Flutter!',
             style: TextStyle(fontSize: 24),
@@ -73,3 +46,6 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
     );
   }
 }
+
+
+
